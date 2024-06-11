@@ -1,5 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "./CreateSlice";
+
+
 function ProductList() {
   
     const plantsArray = [
@@ -8,25 +12,25 @@ function ProductList() {
             plants: [
                 {
                     name: "Snake Plant",
-                    image: "",
+                    image: "https://cdn.pixabay.com/photo/2014/12/05/03/53/echinacea-557477_1280.jpg",
                     description: "Produces oxygen at night, improving air quality.",
                     cost: "$15"
                 },
                 {
                     name: "Spider Plant",
-                    image: "",
+                    image: "https://cdn.pixabay.com/photo/2019/07/15/18/28/flowers-4340127_1280.jpg",
                     description: "Filters formaldehyde and xylene from the air.",
                     cost: "$12"
                 },
                 {
                     name: "Peace Lily",
-                    image: "",
+                    image: "https://cdn.pixabay.com/photo/2018/11/15/10/32/plants-3816945_1280.jpg",
                     description: "Removes mold spores and purifies the air.",
                     cost: "$18"
                 },
                 {
                     name: "Boston Fern",
-                    image: "",
+                    image: "https://cdn.pixabay.com/photo/2014/10/10/04/27/aglaonema-482915_1280.jpg",
                     description: "Adds humidity to the air and removes toxins.",
                     cost: "$20"
                 },
@@ -38,7 +42,7 @@ function ProductList() {
                 },
                 {
                     name: "Aloe Vera",
-                    image: "",
+                    image: "https://cdn.pixabay.com/photo/2014/10/10/04/27/aglaonema-482915_1280.jpg",
                     description: "Purifies the air and has healing properties for skin.",
                     cost: "$14"
                 }
@@ -55,13 +59,13 @@ function ProductList() {
                 },
                 {
                     name: "Jasmine",
-                    image: "",
+                    image: "https://cdn.pixabay.com/photo/2014/10/10/04/27/aglaonema-482915_1280.jpg",
                     description: "Sweet fragrance, promotes relaxation.",
                     cost: "$18"
                 },
                 {
                     name: "Rosemary",
-                    image: "",
+                    image: "https://pixabay.com/images/download/leaf-3283175_640.jpg",
                     description: "Invigorating scent, often used in cooking.",
                     cost: "$15"
                 },
@@ -229,6 +233,17 @@ function ProductList() {
     fontSize: '30px',
     textDecoration: 'none',
    }
+
+
+const handleAddToCart = (plant) => {
+    const existingItem = cartItems.find(item => item.name === plant.name);
+    if (existingItem) {
+        dispatch(addItem({ name: plant.name, image: plant.image, cost: plant.cost }));
+    }
+};
+
+
+
     return (
         <div>
              <div className="navbar" style={styleObj}>
@@ -248,9 +263,36 @@ function ProductList() {
                 <div> <a href="#" style={styleA}>Plants</a></div>
                 <div> <a href="#" style={styleA}><h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
             </div>
+
+            <div className="toggle-Cart">
+
+            <button className="details_button" onClick={handleToggleItems}>
+                        Show Details
+                    </button>
+
+            </div>
         </div>
 
+        
+
         <div className="product-grid">
+
+                {plantsArray.map((category, index) => (
+            <div key={index}>
+                <h1><div>{category.category}</div></h1>
+                <div className="product-list">
+                    {category.plants.map((plant, plantIndex) => (
+                        <div className="product-card" key={plantIndex}>
+                            <img className="product-image" src={plant.image} alt={plant.name} />
+                            <div className="product-title">{plant.name}</div>
+                            
+                            /*Similarly just like above plant.name show other details like description and cost*/
+                            <button  onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        ))}
 
 
         </div>
