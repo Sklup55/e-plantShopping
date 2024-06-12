@@ -1,57 +1,42 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addItem, removeIte, updateQuantity } from "./CreateSlice";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { removeItem, updateQuantity } from "./CreateSlice";
 
-const ConferenceEvent = () => {
-    const [showItems, setShowItems] = useState(false);
-    const venueItems = useSelector((state) => state.venue);
+const CartItem = ({ item }) => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const handleRemove = () => {
+    dispatch(removeItem(item.name));
+  };
 
+  const handleIncrement = () => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
+  };
 
-    const handleToggleItems = () => {
-        setShowItems(!showItems);
-    };
+  const handleDecrement = () => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+  };
 
-    const Cost = ({ totalCosts, ItemsDisplay }) => {
-        // Calculate total amount
-        const cost = (plant.quantity)*(plant.cost)
-    }    
+  const calculateSubtotal = () => {
+    return item.quantity * parseFloat(item.cost.replace("$", ""));
+  };
 
-    const handleRemove = () => {
-        dispatch(removeItem(plant.name));
-    };
-
-
-    const handleRemove = (plant) => {
-        const existingItem = cartItems.find(item => item.name === plant.name);
-        if (existingItem) {
-            dispatch(updateQuantity({ name: plant.name, quantity: existingItem.quantity + 1 }));
-        }
-    };
-
-    const handleUpdate = (plant) => {
-        const existingItem = cartItems.find(item => item.name === plant.name);
-        if (existingItem) {
-            dispatch(updateQuantity({ name: plant.name, quantity: existingItem.quantity + 1 }));
-        }
-    };
-
-
-    return (
-        <div>
-            <h3>{item.name}</h3>
-            <img src={item.image} alt={item.name} />
-            <p>Cost: {item.cost}</p>
-            <p>Quantity: {item.quantity}</p>
-            <p>Subtotal: {Cost()}</p>
-            <button className=" btn-success" onClick={() => handleIncrement(plant)}> &#43; </button>
-            <button className=" btn-success" onClick={() => handleDecrement(plant)}> &#43; </button>
-            <button onClick={handleRemove}>Remove</button>
-        </div>
-    );
-
-
+  return (
+    <div>
+      <h3>{item.name}</h3>
+      <img src={item.image} alt={item.name} />
+      <p>Cost: {item.cost}</p>
+      <p>Quantity: {item.quantity}</p>
+      <p>Subtotal: ${calculateSubtotal()}</p>
+      <button className="btn-success" onClick={handleIncrement}>
+        Increase Quantity
+      </button>
+      <button className="btn-danger" onClick={handleDecrement}>
+        Decrease Quantity
+      </button>
+      <button onClick={handleRemove}>Remove</button>
+    </div>
+  );
 };
 
-export default ConferenceEvent;
+export default CartItem;
