@@ -34,6 +34,35 @@ const SubTotal = ({ totalCosts, ItemsDisplay }) => {
             setCartItems([...cartItems, { ...plant, quantity: 1 }]);
         }
     };
+
+
+ const ItemsDisplay = ({ items }) => {
+        return <>
+           <div className="display_box">
+                <div className="header">
+                <p className="preheading"><h3>Total Cost of added plants </h3></p>
+                </div>
+                <div>
+                    <h2 id="total-cost" className="price"> ${total_amount} </h2>
+                    <div className="render_items">   <ItemsDisplay />  </div>
+                </div>
+            </div>
+      
+      <h3>{items.name}</h3>
+      <img src={items.image} alt={items.name} />
+      <p>Cost: {items.cost}</p>
+      <p>Quantity: {items.quantity}</p>
+      <p>Subtotal: ${calculateSubtotal()}</p>
+      <button className="btn-success" onClick={handleIncrement}>
+        Increase Quantity
+      </button>
+      <button className="btn-danger" onClick={handleDecrement}>
+        Decrease Quantity
+      </button>
+      <button onClick={handleRemove}>Remove</button>
+           
+        </>
+    };
   
 
   return (
