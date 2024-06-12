@@ -286,8 +286,9 @@ const handleAddToCart = (plant) => {
                             <img className="product-image" src={plant.image} alt={plant.name} />
                             <div className="product-title">{plant.name}</div>
                             
-                            /*Similarly just like above plant.name show other details like description and cost*/
-                            <button  onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                    <button className="details_button" onClick={handleToggleItems}>
+                        CART
+                    </button>
                         </div>
                     ))}
                 </div>
