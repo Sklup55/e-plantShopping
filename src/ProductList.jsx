@@ -1,17 +1,21 @@
-import React, { useState,useEffect } from 'react';
-import './ProductList.css'
-import { useSelector, useDispatch } from "react-redux";
-import { addItem } from "./CreateSlice";
-
+import React, { useState, useEffect } from 'react';
+import './ProductList.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem } from './CreateSlice';
+import CartItem from './CartItem';
 
 function ProductList() {
-
     const [showItems, setShowItems] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+    const dispatch = useDispatch();
 
     const handleToggleItems = () => {
         setShowItems(!showItems);
     };
-  
+
+    const handleToggleCart = () => {
+        setShowItems(!showItems);
+    };
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -99,14 +103,14 @@ function ProductList() {
             category: "Insect Repellent Plants",
             plants: [
                 {
-                    name: "oregano",
+                    name: "Oregano",
                     image: "",
-                    description: "The oregano plants contains compounds that can deter certain insects.",
+                    description: "The oregano plants contain compounds that can deter certain insects.",
                     cost: "$10"
                 },
                 {
                     name: "Marigold",
-                    image:"",
+                    image: "",
                     description: "Natural insect repellent, also adds color to the garden.",
                     cost: "$8"
                 },
@@ -219,129 +223,119 @@ function ProductList() {
             ]
         }
     ];
-   const styleObj={
-    backgroundColor: '#4CAF50',
-    color: '#fff!important',
-    padding: '15px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignIems: 'center',
-    fontSize: '20px',
-   }
-   const styleObjUl={
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '1100px',
-   }
-   const styleA={
-    color: 'white',
-    fontSize: '30px',
-    textDecoration: 'none',
-   }
 
+    const styleObj = {
+        backgroundColor: '#4CAF50',
+        color: '#fff!important',
+        padding: '15px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        fontSize: '20px',
+    };
 
-const handleAddToCart = (plant) => {
-    const existingItem = cartItems.find(item => item.name === plant.name);
-    if (existingItem) {
-        dispatch(addItem({ name: plant.name, image: plant.image, cost: plant.cost }));
-    }
-};
+    const styleObjUl = {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '1100px',
+    };
 
-const ItemsDisplay = ({ items }) => {
-    console.log(items);
-    return <>
-        <div className="display_box1">
-            {items.length === 0 && <p>No items selected</p>}
-<div class="cart-details-2">
+    const styleA = {
+        color: 'white',
+        fontSize: '30px',
+        textDecoration: 'none',
+    };
 
-                Name
-                Cost 
-                INC & DEC buttons
-                SUB TOTAL
-                DELETE button
-
-                    {items.map((plant) => (
-                        <tr key={plant}>
-                            <td>{plant.name}</td>
-                            <td>${plant.cost}</td>
-                            <td>
-                                {item.type === "meals" || item.numberOfPeople
-                                ? ` For ${numberOfPeople} people`
-                                : item.quantity}
-                            </td>
-
-                        </tr>
-                    ))}
-
-</div>
-        </div>
-    </>
-};
-
+    const handleAddToCart = (plant) => {
+        const existingItem = cartItems.find((item) => item.name === plant.name);
+        if (existingItem) {
+            const updatedItems = cartItems.map((item) =>
+                item.name === plant.name
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+            setCartItems(updatedItems);
+        } else {
+            setCartItems([...cartItems, { ...plant, quantity: 1 }]);
+        }
+    };
 
 
     return (
         <div>
-             <div className="navbar" style={styleObj}>
-            <div className="tag">
-               <div className="luxury">
-               <img src="" alt="" />
-               <a href="/" style={{textDecoration:'none'}}>
-                        <div>
-                    <h3 style={{color:'white'}}>Paradise Nursery</h3>
-                    <i style={{color:'white'}}>Where Green Meets Serenity</i>
+            <div className="navbar">
+                <div className="tag">
+                    <div className="luxury">
+                        <img src="" alt="" />
+                        <a href="/" style={{ textDecoration: 'none' }}>
+                            <div>
+                                <h3 style={{ color: 'white' }}>Paradise Nursery</h3>
+                                <i style={{ color: 'white' }}>Where Green Meets Serenity</i>
+                            </div>
+                        </a>
                     </div>
-                    </a>
                 </div>
-              
+
+                <div className="main_container">
+                    <button className="details_button" onClick={handleToggleCart}>
+                        {/* Cart button */}
+                        <h1 className="cart">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 256 256"
+                                id="IconChangeColor"
+                                height="68"
+                                width="68"
+                            >
+                                <rect width="156" height="156" fill="none"></rect>
+                                <circle cx="80" cy="216" r="12"></circle>
+                                <circle cx="184" cy="216" r="12"></circle>
+                                <path
+                                    d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8"
+                                    fill="none"
+                                    stroke="#faf9f9"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    id="mainIconPathAttribute"
+                                ></path>
+                            </svg>
+                        </h1>
+                    </button>
+                </div>
             </div>
 
-            <div style={styleObjUl}>
-                <div> <a href="#" style={styleA}>Plants</a></div>
-                <div> <a href="#" style={styleA}>
-                    <button className="details_button" onClick={handleToggleItems}> </button>
-                    <h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
-            </div>
-
-            <div className="main_container">
-                {!showItems
-                    ?
-                    (
-                        <CartItem></CartItem>
-
-                    )
-                }
-            </div>
-
-
-
-
-        <div className="product-grid">
-
+            <div className="product-grid">
                 {plantsArray.map((category, index) => (
-            <div key={index}>
-                <h1><div>{category.category}</div></h1>
-                <div className="product-list">
-                    {category.plants.map((plant, plantIndex) => (
-                        <div className="product-card" key={plantIndex}>
-                            <div className="product-title">{plant.name}</div>
-                            <img className="product-image" src={plant.image} alt={plant.name} />
-                          <div className="product-title">{plant.cost}</div>
-                          <div className="product-title">{plant.description}</div>
+                    <div key={index}>
+                        <h1>
+                            <div>{category.category}</div>
+                        </h1>
+                        <div className="product-list">
+                            {category.plants.map((plant, plantIndex) => (
+                                <div className="product-card" key={plantIndex}>
+                                    <div className="product-title">{plant.name}</div>
+                                    <img
+                                        className="product-image"
+                                        src={plant.image}
+                                        alt={plant.name}
+                                    />
+                                    <div className="product-title">{plant.cost}</div>
+                                    <div className="product-title">{plant.description}</div>
 
-                           <button onClick={() => handleAddToCart(plant)}  ></button>
-                           
+                                    <button onClick={() => handleAddToCart(plant)}>
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
-        ))}
 
-
+            {showItems && <CartItem cartItems={cartItems} />}
         </div>
-
-    </div>
     );
 }
 
