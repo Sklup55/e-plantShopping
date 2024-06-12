@@ -17,9 +17,9 @@ const CartItem = ({ item }) => {
     dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
   };
 
-  const calculateSubtotal = () => {
-    return item.quantity * parseFloat(item.cost.replace("$", ""));
-  };
+const SubTotal = ({ totalCosts, ItemsDisplay }) => {
+    // Calculate total amount
+    const total_amount = totalCosts.cart;
 
     const handleAddToCart = (plant) => {
         const existingItem = cartItems.find((item) => item.name === plant.name);
@@ -38,6 +38,16 @@ const CartItem = ({ item }) => {
 
   return (
     <div>
+      <div className="display_box">
+                <div className="header">
+                <p className="preheading"><h3>Total Cost of added plants </h3></p>
+                </div>
+                <div>
+                    <h2 id="total-cost" className="price"> ${total_amount} </h2>
+                    <div className="render_items">   <ItemsDisplay />  </div>
+                </div>
+            </div>
+      
       <h3>{item.name}</h3>
       <img src={item.image} alt={item.name} />
       <p>Cost: {item.cost}</p>
