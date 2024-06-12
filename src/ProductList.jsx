@@ -5,6 +5,12 @@ import { addItem } from "./CreateSlice";
 
 
 function ProductList() {
+
+    const [showItems, setShowItems] = useState(false);
+
+    const handleToggleItems = () => {
+        setShowItems(!showItems);
+    };
   
     const plantsArray = [
         {
@@ -242,6 +248,37 @@ const handleAddToCart = (plant) => {
     }
 };
 
+const ItemsDisplay = ({ items }) => {
+    console.log(items);
+    return <>
+        <div className="display_box1">
+            {items.length === 0 && <p>No items selected</p>}
+<div class="cart-details-2">
+
+                Name
+                Cost 
+                INC & DEC buttons
+                SUB TOTAL
+                DELETE button
+
+                    {items.map((plant) => (
+                        <tr key={plant}>
+                            <td>{plant.name}</td>
+                            <td>${plant.cost}</td>
+                            <td>
+                                {item.type === "meals" || item.numberOfPeople
+                                ? ` For ${numberOfPeople} people`
+                                : item.quantity}
+                            </td>
+
+                        </tr>
+                    ))}
+
+</div>
+        </div>
+    </>
+};
+
 
 
     return (
@@ -257,21 +294,27 @@ const handleAddToCart = (plant) => {
                     </div>
                     </a>
                 </div>
-
-
               
             </div>
+
             <div style={styleObjUl}>
                 <div> <a href="#" style={styleA}>Plants</a></div>
-                <div> <a href="#" style={styleA}><h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
+                <div> <a href="#" style={styleA}>
+                    <button className="details_button" onClick={handleToggleItems}> </button>
+                    <h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
             </div>
 
-            <div className="toggle-Cart">
+            <div className="main_container">
+                {!showItems
+                    ?
+                    (
+                        <CartItem></CartItem>
 
-             <button className="details_button" onClick={handleToggleItems}>  CART </button>
-
+                    )
+                }
             </div>
-        </div>
+
+
 
 
         <div className="product-grid">
@@ -287,7 +330,7 @@ const handleAddToCart = (plant) => {
                           <div className="product-title">{plant.cost}</div>
                           <div className="product-title">{plant.description}</div>
 
-                           <button onClick={() => handleAddToCart(plant)}  >
+                           <button onClick={() => handleAddToCart(plant)}  ></button>
                            
                         </div>
                     ))}
