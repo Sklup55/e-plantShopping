@@ -1,20 +1,17 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { removeItem, updateQuantity } from "./CreateSlice";
 
-const CartItem = ({ item }) => {
+const CartItem = () => {
+  const cartItems = useSelector((state) => cart.venue);
   const dispatch = useDispatch();
 
-  const handleRemove = () => {
-    dispatch(removeItem(item.name));
+  const handleRemove = (index) => {
+    dispatch(removeItem(index));
   };
 
-  const handleIncrement = () => {
-    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
-  };
-
-  const handleDecrement = () => {
-    dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+  const handleIncrement = (index) => {
+   dispatch(updateQuanity(index));
   };
 
 const SubTotal = ({ totalCosts, ItemsDisplay }) => {
