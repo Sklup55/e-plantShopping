@@ -17,7 +17,13 @@ const ProductList = () => {
         setShowItems(!showItems);
     };
 
-
+    const handleAddToCart = (plant) => {
+        const existingItem = cartItems.find(item => item.name === plant.name);
+        if (existingItem) {
+            dispatch(addItem({ name: plant.name, image: plant.image, cost: plant.cost }));
+        }
+    };
+    
 
     const plantsArray = [
         {
@@ -267,36 +273,16 @@ const ProductList = () => {
                     </div>
                 </div>
 
-                <div className="main_container">
-                    <button className="details_button" onClick={handleToggleCart}>
-                        {/* Cart button */}
-                        <h1 className="cart">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 256 256"
-                                id="IconChangeColor"
-                                height="68"
-                                width="68"
-                            >
-                                <rect width="156" height="156" fill="none"></rect>
-                                <circle cx="80" cy="216" r="12"></circle>
-                                <circle cx="184" cy="216" r="12"></circle>
-                                <path
-                                    d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8"
-                                    fill="none"
-                                    stroke="#faf9f9"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    id="mainIconPathAttribute"
-                                ></path>
-                            </svg>
-                        </h1>
-                    </button>
-                </div>
+            <div style={styleObjUl}>
+                <div> <a href="#" style={styleA}>Plants</a></div>
+                <div>     <button className="details_button" onClick={handleToggleCart}> </button>button>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
             </div>
 
-            <div className="product-grid">
+        <div className="main_container">
+                {!showItems
+                    ?
+                    ( <div className="product-grid">
                 {plantsArray.map((category, index) => (
                     <div key={index}>
                         <h1>
@@ -306,12 +292,8 @@ const ProductList = () => {
                             {category.plants.map((plant, plantIndex) => (
                                 <div className="product-card" key={plantIndex}>
                                     <div className="product-title">{plant.name}</div>
-                                    <img
-                                        className="product-image"
-                                        src={plant.image}
-                                        alt={plant.name}
-                                    />
                                     <div className="product-title">{plant.cost}</div>
+                                    <img className="product-image" src={plant.image} alt={plant.name} />
                                     <div className="product-title">{plant.description}</div>
 
                                     <button onClick={() => handleAddToCart(plant)}>
@@ -324,7 +306,6 @@ const ProductList = () => {
                 ))}
             </div>
 
-            {showItems && <CartItem cartItems={cartItems} />}
         </div>
     );
 }
