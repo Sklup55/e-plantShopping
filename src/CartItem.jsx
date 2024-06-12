@@ -21,6 +21,21 @@ const CartItem = ({ item }) => {
     return item.quantity * parseFloat(item.cost.replace("$", ""));
   };
 
+    const handleAddToCart = (plant) => {
+        const existingItem = cartItems.find((item) => item.name === plant.name);
+        if (existingItem) {
+            const updatedItems = cartItems.map((item) =>
+                item.name === plant.name
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+            setCartItems(updatedItems);
+        } else {
+            setCartItems([...cartItems, { ...plant, quantity: 1 }]);
+        }
+    };
+  
+
   return (
     <div>
       <h3>{item.name}</h3>
