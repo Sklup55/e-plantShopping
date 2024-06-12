@@ -257,6 +257,8 @@ const handleAddToCart = (plant) => {
                     </div>
                     </a>
                 </div>
+
+
               
             </div>
             <div style={styleObjUl}>
@@ -266,14 +268,11 @@ const handleAddToCart = (plant) => {
 
             <div className="toggle-Cart">
 
-            <button className="details_button" onClick={handleToggleItems}>
-                        Show Details
-                    </button>
+             <button className="details_button" onClick={handleToggleItems}>  CART </button>
 
             </div>
         </div>
 
-        
 
         <div className="product-grid">
 
@@ -286,9 +285,6 @@ const handleAddToCart = (plant) => {
                             <img className="product-image" src={plant.image} alt={plant.name} />
                             <div className="product-title">{plant.name}</div>
                             
-                    <button className="details_button" onClick={handleToggleItems}>
-                        CART
-                    </button>
                         </div>
                     ))}
                 </div>
