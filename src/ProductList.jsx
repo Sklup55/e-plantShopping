@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from './CreateSlice';
 import CartItem from './CartItem';
 
-function ProductList() {
+const ProductList = () => {
     const [showItems, setShowItems] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
+    const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     const handleToggleItems = () => {
@@ -16,6 +16,9 @@ function ProductList() {
     const handleToggleCart = () => {
         setShowItems(!showItems);
     };
+
+
+
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -247,19 +250,6 @@ function ProductList() {
         textDecoration: 'none',
     };
 
-    const handleAddToCart = (plant) => {
-        const existingItem = cartItems.find((item) => item.name === plant.name);
-        if (existingItem) {
-            const updatedItems = cartItems.map((item) =>
-                item.name === plant.name
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            );
-            setCartItems(updatedItems);
-        } else {
-            setCartItems([...cartItems, { ...plant, quantity: 1 }]);
-        }
-    };
 
 
     return (
