@@ -44,6 +44,29 @@ const SubTotal = ({ totalCosts, ItemsDisplay }) => {
                     <div className="render_items">   <ItemsDisplay />  </div>
                 </div>
             </div>
+
+          <div each-category-plant>
+             {items.map((category, index) => (
+                    <div key={index}>
+                        <h1><div>{category.category}</div></h1>
+                        <div className="product-list">
+                            {category.items.map((plant, plantIndex) => (
+                                <div className="product-card" key={plantIndex}>
+                                    <div className="product-title">{plant.name}</div>
+                                    <div className="product-title">{plant.cost}</div>
+                                    <img className="product-image" src={plant.image} alt={plant.name} />
+
+ 
+    
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+
+
+      
+          </div>
       
       <h3>{items.name}</h3>
       <img src={items.image} alt={items.name} />
