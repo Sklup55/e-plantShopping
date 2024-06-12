@@ -55,31 +55,21 @@ const SubTotal = ({ totalCosts, ItemsDisplay }) => {
                                     <div className="product-title">{plant.name}</div>
                                     <div className="product-title">{plant.cost}</div>
                                     <img className="product-image" src={plant.image} alt={plant.name} />
-
- 
-    
+                              <button className="btn-success" onClick={handleIncrement}> Increase Quantity  </button>
+                              <button className="btn-danger" onClick={handleDecrement}> Decrease Quantity </button>
+                               <div className="header"> <h3>TOTAL</h3>
+                              <h2 id="pre_fee_cost_display" className="price"> ${total_amount} </h2>
+                            </div>
+                             <button onClick={handleRemove}>Remove</button>
+                      
                                 </div>
                             ))}
                         </div>
                     </div>
                 ))}
 
-
-      
           </div>
-      
-      <h3>{items.name}</h3>
-      <img src={items.image} alt={items.name} />
-      <p>Cost: {items.cost}</p>
-      <p>Quantity: {items.quantity}</p>
-      <p>Subtotal: ${calculateSubtotal()}</p>
-      <button className="btn-success" onClick={handleIncrement}>
-        Increase Quantity
-      </button>
-      <button className="btn-danger" onClick={handleDecrement}>
-        Decrease Quantity
-      </button>
-      <button onClick={handleRemove}>Remove</button>
+
            
         </>
     };
@@ -87,28 +77,20 @@ const SubTotal = ({ totalCosts, ItemsDisplay }) => {
 
   return (
     <div>
+
       <div className="display_box">
                 <div className="header">
-                <p className="preheading"><h3>Total Cost of added plants </h3></p>
-                </div>
-                <div>
+                <p className="preheading"><h3>Total Cart Amount </h3></p>
+                  <div>
                     <h2 id="total-cost" className="price"> ${total_amount} </h2>
-                    <div className="render_items">   <ItemsDisplay />  </div>
+                    </div>div>
+                </div>
+        
+                <div>
+                    <div className="render_items">  <ItemsDisplay/>  </div>
                 </div>
             </div>
-      
-      <h3>{item.name}</h3>
-      <img src={item.image} alt={item.name} />
-      <p>Cost: {item.cost}</p>
-      <p>Quantity: {item.quantity}</p>
-      <p>Subtotal: ${calculateSubtotal()}</p>
-      <button className="btn-success" onClick={handleIncrement}>
-        Increase Quantity
-      </button>
-      <button className="btn-danger" onClick={handleDecrement}>
-        Decrease Quantity
-      </button>
-      <button onClick={handleRemove}>Remove</button>
+
     </div>
   );
 };
