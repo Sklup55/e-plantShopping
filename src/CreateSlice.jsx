@@ -7,26 +7,28 @@ export const CreateSlice = createSlice({
     items: []
   },
   reducers: {
+    
     addItem: (state, action) => {
-      const { name, image, cost } = action.payload;
-      const existingItem = state.items.find(item => item.name === name);
-      if (existingItem) {
-        existingItem.quantity++;
-      } else {
-        state.items.push({ name, image, cost, quantity: 1 });
-      }
+      const { payload: index } = action;
+      if (state[index]) {
+        if (state[index].find(item => state[index].name === name) {
+        state[index].push({ state[index].name, state[index].image, state[index].cost, state[index].quantity: 1 });
+    
     },
+
     removeItem: (state, action) => {
-      const itemName = action.payload;
-      state.items = state.items.filter(item => item.name !== itemName);
+      const { payload: index } = action;
+      state[index] = state[index].filter(state[index].name !== name);
+      
     },
+      
     updateQuantity: (state, action) => {
-      const { name, quantity } = action.payload;
-      const itemToUpdate = state.items.find(item => item.name === name);
+    const { payload: index } = action;
+   const itemToUpdate = state[index].find(state[index].name == name);
       if (itemToUpdate) {
-        itemToUpdate.quantity = quantity;
+        state[index].quantity = quantity;
       }
-    }
+
   }
 });
 
